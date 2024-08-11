@@ -1,17 +1,21 @@
 import { SearchIcon } from "lucide-react";
-import { Badge } from "./_components/ui/badge";
-
 import Image from "next/image";
 import BarbershopItem from "./_components/barbershop-item";
+import BookingItems from "./_components/booking-item";
 import Header from "./_components/header";
-import { Avatar, AvatarImage } from "./_components/ui/avatar";
 import { Button } from "./_components/ui/button";
 import { Card, CardContent } from "./_components/ui/card";
 import { Input } from "./_components/ui/input";
+import { quickSearchOptions } from "./_constants/search";
 import { db } from "./_lib/prisma";
 
 export default async function Home() {
 	const barbershoops = await db.barbershop.findMany({});
+	const popularBarbershop = await db.barbershop.findMany({
+		orderBy: {
+			name: "desc",
+		},
+	});
 
 	return (
 		<div>
@@ -25,6 +29,20 @@ export default async function Home() {
 						<SearchIcon />
 					</Button>
 				</div>
+				<div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]">
+					{quickSearchOptions.map((option) => (
+						<Button className="gap-2" variant="secondary" key={option.title}>
+							<Image
+								src={option.imageUrl}
+								width={16}
+								height={16}
+								alt={option.title}
+							/>
+							{option.title}
+						</Button>
+					))}
+				</div>
+
 				<div className="relative h-[150px] w-full mt-5">
 					<Image
 						alt="banner"
@@ -36,25 +54,7 @@ export default async function Home() {
 				<h2 className="text-xs font-bold uppercase text-gray-400 mt-4 mb-3">
 					Agendamentos
 				</h2>
-				<Card>
-					<CardContent className="flex justify-between p-0">
-						<div className="flex flex-col gap-2 py-5 pl-5 ">
-							<Badge className="w-fit">Confirmado</Badge>
-							<h3 className="font-semibold">Corte de Cabelo</h3>
-							<div className="flex items-center gap-2">
-								<Avatar className="h-6 w-6">
-									<AvatarImage src="https://utfs.io/f/45331760-899c-4b4b-910e-e00babb6ed81-16q.png" />
-								</Avatar>
-								<p className="text-sm">Barbearia DevJohn</p>
-							</div>
-						</div>
-						<div className="flex flex-col items-center justify-center px-5 border-l-2 border-solid ">
-							<p className="text-sm">Agosto</p>
-							<p className="text-2xl">05</p>
-							<p className="text-sm">14:30</p>
-						</div>
-					</CardContent>
-				</Card>
+				<BookingItems />
 				<h2 className="text-xs font-bold uppercase text-gray-400 mt-4 mb-3">
 					Recomendados
 				</h2>
@@ -63,7 +63,24 @@ export default async function Home() {
 						<BarbershopItem key={barbershoop.id} barbershop={barbershoop} />
 					))}
 				</div>
+				<h2 className="text-xs font-bold uppercase text-gray-400 mt-4 mb-3">
+					Populares
+				</h2>
+				<div className="flex gap-4 overflow-auto">
+					{popularBarbershop.map((barbershoop) => (
+						<BarbershopItem key={barbershoop.id} barbershop={barbershoop} />
+					))}
+				</div>
 			</div>
+			<footer>
+				<Card>
+					<CardContent className="px-4 py-4">
+						<p className="text-sm text-gray-400">
+							Desenvolvido por <span className="font-bold">Joao Batista</span>
+						</p>
+					</CardContent>
+				</Card>
+			</footer>
 		</div>
 	);
 }
