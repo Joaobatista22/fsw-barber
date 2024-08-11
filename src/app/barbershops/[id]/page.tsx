@@ -4,7 +4,7 @@ import ServiceItem from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
 
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
+import { ChevronLeftIcon, MapPinIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,7 +16,6 @@ interface BarbershopPageProps {
 }
 
 const BarbershopPage = async ({ params }: BarbershopPageProps) => {
-	// chamar o meu banco de dados
 	const barbershop = await db.barbershop.findUnique({
 		where: {
 			id: params.id,
@@ -30,9 +29,12 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 		return notFound();
 	}
 
+	const HandleCopyPhoneClick = (phone: string) => {
+		navigator.clipboard.writeText(phone);
+	};
+
 	return (
 		<div>
-			{/* IMAGEM */}
 			<div className="relative h-[250px] w-full">
 				<Image
 					alt={barbershop.name}
@@ -53,7 +55,6 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 				</Button>
 			</div>
 
-			{/* TÍTULO */}
 			<div className="border-b border-solid p-5">
 				<h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
 				<div className="mb-2 flex items-center gap-2">
@@ -67,15 +68,12 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 				</div>
 			</div>
 
-			{/* DESCRIÇÃO */}
 			<div className="space-y-2 border-b border-solid p-5">
 				<h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
 				<p className="text-justify text-sm">{barbershop?.description}</p>
 			</div>
 
-			{/* SERVIÇOS */}
 			<div className="space-y-3 border-b border-solid p-5">
-				<h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
 				<div className="space-y-3">
 					{barbershop.services.map((service) => (
 						<ServiceItem key={service.id} service={service} />
@@ -83,7 +81,6 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 				</div>
 			</div>
 
-			{/* CONTATO */}
 			<div className="space-y-3 p-5">
 				{barbershop.phones.map((phone) => (
 					<PhoneItem key={phone} phone={phone} />

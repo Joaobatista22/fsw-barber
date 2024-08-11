@@ -4,7 +4,6 @@ import BarbershopItem from "./_components/barbershop-item";
 import BookingItems from "./_components/booking-item";
 import Header from "./_components/header";
 import { Button } from "./_components/ui/button";
-import { Card, CardContent } from "./_components/ui/card";
 import { Input } from "./_components/ui/input";
 import { quickSearchOptions } from "./_constants/search";
 import { db } from "./_lib/prisma";
@@ -72,15 +71,6 @@ export default async function Home() {
 					))}
 				</div>
 			</div>
-			<footer>
-				<Card>
-					<CardContent className="px-4 py-4">
-						<p className="text-sm text-gray-400">
-							Desenvolvido por <span className="font-bold">Joao Batista</span>
-						</p>
-					</CardContent>
-				</Card>
-			</footer>
 		</div>
 	);
 }
