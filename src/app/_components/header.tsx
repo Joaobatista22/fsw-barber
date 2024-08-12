@@ -1,16 +1,84 @@
-import { Icon, MenuIcon } from "lucide-react";
+import { CalendarIcon, HomeIcon, LogOutIcon, MenuIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { quickSearchOptions } from "../_constants/search";
+import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import {
+	Sheet,
+	SheetClose,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "./ui/sheet";
 
 const Header = () => {
 	return (
 		<Card>
-			<CardContent className="p-5 flex flex-row items-center justify-between">
+			<CardContent className="flex flex-row items-center justify-between p-5">
 				<Image alt="FSW Barber" src="/logo.png" height={18} width={120} />
-				<Button variant="outline" size="icon">
-					<MenuIcon />
-				</Button>
+
+				<Sheet>
+					<SheetTrigger asChild>
+						<Button size="icon" variant="outline">
+							<MenuIcon />
+						</Button>
+					</SheetTrigger>
+					<SheetContent className="w-[400px] sm:w-[540px] overflow-y-auto">
+						<SheetHeader>
+							<SheetTitle className="text-left">Menu</SheetTitle>
+						</SheetHeader>
+						<div className="flex gap-4 py-5 border-b border-solid">
+							<Avatar>
+								<AvatarImage src="https://lwlies.com/wp-content/uploads/2017/04/avatar-2009.jpg" />
+							</Avatar>
+							<div>
+								<h1 className="font-bolt">João Batista</h1>
+								<p className="text-xs">joaobatista.ds@gmail.com</p>
+							</div>
+						</div>
+						<div className="flex flex-col gap-4 py-5 border-b border-solid">
+							<SheetClose asChild>
+								<Button className="justify-start gap-2" variant="ghost" asChild>
+									<Link href="/">
+										<HomeIcon size={18} />
+										Inicio
+									</Link>
+								</Button>
+							</SheetClose>
+							<Button className="justify-start gap-2" variant="ghost">
+								<CalendarIcon size={18} />
+								Agendamentos
+							</Button>
+						</div>
+
+						<div className="flex flex-col gap-4 py-5 border-b border-solid">
+							{quickSearchOptions.map((option) => (
+								<Button
+									key={option.title}
+									className="justify-start gap-2"
+									variant="ghost"
+								>
+									<Image
+										alt={option.title}
+										src={option.imageUrl}
+										height={18}
+										width={18}
+									/>
+									{option.title}
+								</Button>
+							))}
+						</div>
+						<div className="flex flex-col gap-4 py-5 ">
+							<Button className="justify-start gap-2" variant="ghost">
+								<LogOutIcon />
+								Sair da conta
+							</Button>
+						</div>
+					</SheetContent>
+				</Sheet>
 			</CardContent>
 		</Card>
 	);

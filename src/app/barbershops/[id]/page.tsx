@@ -28,11 +28,6 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 	if (!barbershop) {
 		return notFound();
 	}
-
-	const HandleCopyPhoneClick = (phone: string) => {
-		navigator.clipboard.writeText(phone);
-	};
-
 	return (
 		<div>
 			<div className="relative h-[250px] w-full">
@@ -80,8 +75,14 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
 					))}
 				</div>
 			</div>
+			<div
+				className="p
+		"
+			>
+				<h2 className="text-xs font-bold uppercase text-gray-400">Contato</h2>
+			</div>
 
-			<div className="space-y-3 p-5">
+			<div className="space-y-3 p-2">
 				{barbershop.phones.map((phone) => (
 					<PhoneItem key={phone} phone={phone} />
 				))}
