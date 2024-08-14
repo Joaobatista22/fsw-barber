@@ -4,9 +4,10 @@ import BarbershopItem from "./_components/barbershop-item";
 import BookingItems from "./_components/booking-item";
 import Header from "./_components/header";
 import { Button } from "./_components/ui/button";
-import { Input } from "./_components/ui/input";
 import { quickSearchOptions } from "./_constants/search";
 import { db } from "./_lib/prisma";
+import Search from "./_components/search";
+import Link from "next/link";
 
 export default async function Home() {
 	const barbershoops = await db.barbershop.findMany({});
@@ -22,22 +23,26 @@ export default async function Home() {
 			<div className="p-5">
 				<h2 className="text-xl font-bold">Olá, João!</h2>
 				<p>Segunda-feira, 05 de agosto</p>
-				<div className="flex items-center gap-5 mt-6">
-					<Input placeholder="Faça sua busca..." />{" "}
-					<Button>
-						<SearchIcon />
-					</Button>
+				<div className="mt-6">
+					<Search />
 				</div>
 				<div className="mt-6 flex gap-3 overflow-x-scroll [&::-webkit-scrollbar]">
 					{quickSearchOptions.map((option) => (
-						<Button className="gap-2" variant="secondary" key={option.title}>
-							<Image
-								src={option.imageUrl}
-								width={16}
-								height={16}
-								alt={option.title}
-							/>
-							{option.title}
+						<Button
+							className="gap-2"
+							variant="secondary"
+							key={option.title}
+							asChild
+						>
+							<Link href={`/barbershops?service=${option.title}`}>
+								<Image
+									src={option.imageUrl}
+									width={16}
+									height={16}
+									alt={option.title}
+								/>
+								{option.title}
+							</Link>
 						</Button>
 					))}
 				</div>
