@@ -1,19 +1,10 @@
-import { CalendarIcon, HomeIcon, LogOutIcon, MenuIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { quickSearchOptions } from "../_constants/search";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "./ui/sheet";
-import SidebarButton from "./sidebar-sheet";
+import { Button } from "./ui/button";
+import { MenuIcon } from "lucide-react";
+import { Sheet, SheetTrigger } from "./ui/sheet";
+import SidebarSheet from "./sidebar-sheet";
+import Link from "next/link";
 
 const Header = () => {
 	return (
@@ -29,7 +20,7 @@ const Header = () => {
 							<MenuIcon />
 						</Button>
 					</SheetTrigger>
-					<SidebarButton />
+					<SidebarSheet />
 				</Sheet>
 			</CardContent>
 		</Card>
