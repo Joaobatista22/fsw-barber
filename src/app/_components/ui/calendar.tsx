@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
 "use client";
 
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
+
 import { cn } from "@/app/_lib/utils";
 import { buttonVariants } from "@/app/_components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -51,12 +54,14 @@ function Calendar({
 				day_hidden: "invisible",
 				...classNames,
 			}}
-			components={{}}
+			components={{
+				IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
+				IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+			}}
 			{...props}
 		/>
 	);
 }
-
 Calendar.displayName = "Calendar";
 
 export { Calendar };
