@@ -1,4 +1,4 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter"; // Use o pacote correto
 import type { AuthOptions, User } from "next-auth";
 import { db } from "./prisma";
 import type { Adapter } from "next-auth/adapters";
